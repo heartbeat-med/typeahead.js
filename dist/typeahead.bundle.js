@@ -1,7 +1,7 @@
 /*!
  * typeahead.js 0.10.5
  * https://github.com/twitter/typeahead.js
- * Copyright 2013-2014 Twitter, Inc. and other contributors; Licensed MIT
+ * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
  */
 
 (function($) {
@@ -1454,6 +1454,7 @@
             }
             this.isActivated = false;
             this.autoselect = !!o.autoselect;
+            this.preventSetValueOnCursorChanged = !!o.preventSetValueOnCursorChanged;
             this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
             this.$node = buildDom(o.input, o.withHint);
             $menu = this.$node.find(".tt-dropdown-menu");
@@ -1497,7 +1498,9 @@
             },
             _onCursorMoved: function onCursorMoved() {
                 var datum = this.dropdown.getDatumForCursor();
-                this.input.setInputValue(datum.value, true);
+                if (!this.preventSetValueOnCursorMoved) {
+                    this.input.setInputValue(datum.value, true);
+                }
                 this.eventBus.trigger("cursorchanged", datum.raw, datum.datasetName);
             },
             _onCursorRemoved: function onCursorRemoved() {
@@ -1713,6 +1716,7 @@
                         withHint: _.isUndefined(o.hint) ? true : !!o.hint,
                         minLength: o.minLength,
                         autoselect: o.autoselect,
+                        preventSetValueOnCursorMoved: o.preventSetValueOnCursorMoved,
                         datasets: datasets
                     });
                     $input.data(typeaheadKey, typeahead);
