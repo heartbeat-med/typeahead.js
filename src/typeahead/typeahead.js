@@ -24,6 +24,7 @@ var Typeahead = (function() {
 
     this.isActivated = false;
     this.autoselect = !!o.autoselect;
+    this.preventSetValueOnCursorChanged = !!o.preventSetValueOnCursorChanged;
     this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
     this.$node = buildDom(o.input, o.withHint);
 
@@ -97,9 +98,10 @@ var Typeahead = (function() {
 
     _onCursorMoved: function onCursorMoved() {
       var datum = this.dropdown.getDatumForCursor();
-
-      this.input.setInputValue(datum.value, true);
-
+      if (!this.preventSetValueOnCursorMoved)
+      {
+        this.input.setInputValue(datum.value, true);
+      }
       this.eventBus.trigger('cursorchanged', datum.raw, datum.datasetName);
     },
 

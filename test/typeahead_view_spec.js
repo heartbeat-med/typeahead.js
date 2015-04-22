@@ -57,6 +57,23 @@ describe('Typeahead', function() {
       .toHaveBeenCalledWith(testDatum.value, true);
     });
 
+    it('should not update the input value if preventSetValueOnCursorMoved is true', function() {
+      this.view.preventSetValueOnCursorMoved = true;
+      this.dropdown.trigger('cursorMoved');
+      this.view.preventSetValueOnCursorMoved = undefined;
+      expect(this.input.setInputValue)
+        .not
+        .toHaveBeenCalledWith(testDatum.value, true);
+    });
+
+    it('should update the input value if preventSetValueOnCursorMoved is false', function() {
+      this.view.preventSetValueOnCursorMoved = false;
+      this.dropdown.trigger('cursorMoved');
+      this.view.preventSetValueOnCursorMoved = undefined;
+      expect(this.input.setInputValue)
+        .toHaveBeenCalledWith(testDatum.value, true);
+    });
+
     it('should trigger cursorchanged', function() {
       var spy;
 
