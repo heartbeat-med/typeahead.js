@@ -24,7 +24,7 @@ var Typeahead = (function() {
 
     this.isActivated = false;
     this.autoselect = !!o.autoselect;
-    this.preventSetValueOnCursorChanged = !!o.preventSetValueOnCursorChanged;
+    this.preventSetValueOnCursorMoved = !!o.preventSetValueOnCursorMoved;
     this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
     this.$node = buildDom(o.input, o.withHint);
 
