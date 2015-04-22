@@ -12,3 +12,5 @@ bower_components
 
 *.iml
 .idea
+
+atlassian-ide-plugin.xml
